@@ -13,13 +13,15 @@ namespace ApiGatewayService.Controllers
         private IAuthenticationService _authenticationService;
         private IInventoryService _inventoryService;
         private IReviewService _reviewService;
+        private IOrderService _orderService;
 
-        public ApiGatewayController( IAuthenticationService authenticationService,IInventoryService inventoryService,IReviewService reviewService)
+        public ApiGatewayController( IAuthenticationService authenticationService, IInventoryService inventoryService, IReviewService reviewService, IOrderService orderService = null)
         {
-           
+
             _authenticationService = authenticationService;
             _inventoryService = inventoryService;
             _reviewService = reviewService;
+            _orderService = orderService;
         }
 
         [HttpPost]
@@ -111,11 +113,73 @@ namespace ApiGatewayService.Controllers
 
         [HttpPut]
         [Route("reviews")]
-        public async Task<ActionResult<Review>> PuttReview(int reviewId,Review review)
+        public async Task<ActionResult<Review>> PutReview(int reviewId,Review review)
         {
             var response = await _reviewService.UpdateReviewForProductAsync(reviewId,review);
 
             if (response == null)
+                return BadRequest();
+
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("orders")]
+        public async Task<ActionResult<IEnumerable<Order>>> GetOrders(int userId)
+        {
+            var response = await _orderService.GetOrdersForUserAsync(userId);
+
+            if (response == null)
+                return BadRequest();
+
+            return Ok(response);
+        }
+
+        [HttpPost]
+        [Route("orders")]
+        public async Task<ActionResult<Order>> PostOrder(Order order)
+        {
+            var response = await _orderService.PostOrderForUserAsync(order);
+
+            if (response == null)
+                return BadRequest();
+
+            return Ok(response);
+        }
+
+        [HttpPost]
+        [Route("order/checkout")]
+        public async Task<ActionResult<bool>> CheckoutOrder(int orderId)
+        {
+            var response = await _orderService.CheckOutOrderAsync(orderId);
+
+            if (response == null)
+                return BadRequest();
+
+            return Ok(response);
+        }
+
+
+        [HttpPut]
+        [Route("orders")]
+        public async Task<ActionResult<Review>> PutOrder(int orderId, Order Order)
+        {
+            var response = await _orderService.PutOrderForUserAsync(orderId, Order);
+
+            if (response == null)
+                return BadRequest();
+
+            return Ok(response);
+        }
+
+
+        [HttpDelete]
+        [Route("orders")]
+        public async Task<ActionResult<bool>>DeleteOrder(int orderId)
+        {
+            var response = await _orderService.DeleteOrderForUserAsync(orderId);
+
+            if(response==false)
                 return BadRequest();
 
             return Ok(response);
