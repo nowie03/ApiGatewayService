@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "BME49lDKPfEG6Hf7Dpb6oii05CawehhLn7+k2jWDE2wVIRQCAZY9xg3wKFflC8w7L4QWeygzCY+if3tznrRaRw==",
+  "dgSpecHash": "hLPFvsrXnvMClz+pxdUeo8ckz5nzNTuSzfH0SNPqLGcZsXI72AelqMh6D4dNdCEh09MIXbbVkktTQRHMCmwlCg==",
   "success": true,
   "projectFilePath": "C:\\Users\\hp\\source\\repos\\ApiGatewayService\\ApiGatewayService.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\hp\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
     "C:\\Users\\hp\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
     "C:\\Users\\hp\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.17.2\\microsoft.visualstudio.azure.containers.tools.targets.1.17.2.nupkg.sha512",
+    "C:\\Users\\hp\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\hp\\.nuget\\packages\\swashbuckle.aspnetcore\\6.2.3\\swashbuckle.aspnetcore.6.2.3.nupkg.sha512",
     "C:\\Users\\hp\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.2.3\\swashbuckle.aspnetcore.swagger.6.2.3.nupkg.sha512",
     "C:\\Users\\hp\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.2.3\\swashbuckle.aspnetcore.swaggergen.6.2.3.nupkg.sha512",

@@ -1,4 +1,7 @@
 using ApiGatewayService.Models;
+using ApiGatewayService.Repositories;
+using ApiGatewayService.RequestModels;
+using ApiGatewayService.ResponseModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Http.Json;
 
@@ -8,7 +11,8 @@ namespace ApiGatewayService.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private IHttpClientFactory _httpClientFactory;
+        private IAuthenticationService _authenticationService;
+       
         private static readonly string[] Summaries = new[]
         {
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
@@ -16,22 +20,27 @@ namespace ApiGatewayService.Controllers
 
         private readonly ILogger<WeatherForecastController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, IHttpClientFactory httpClientFactory)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IAuthenticationService authenticationService)
         {
             _logger = logger;
-            _httpClientFactory = httpClientFactory;
+            _authenticationService = authenticationService;
         }
-        [HttpGet]
-        [Route("users")]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers(int skip,int limit)
+       
+
+
+        [HttpPost]
+        [Route("login")]
+        public async Task<ActionResult<LoginResponse>>Login(LoginRequest request)
         {
-            var httpClient=_httpClientFactory.CreateClient();
 
-            var content = await httpClient.GetFromJsonAsync<IEnumerable<User>>($"http://localhost:5005/api/Users?limit={limit}&skip={skip}");
+            var response =await  _authenticationService.Login(request);
 
-            return Ok(content);
+            if (response == null) return BadRequest();
 
+            return Ok(response);
         }
+
+
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {

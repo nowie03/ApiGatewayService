@@ -30,3 +30,4 @@ C:\Users\hp\source\repos\ApiGatewayService\obj\Debug\net6.0\refint\ApiGatewaySer
 C:\Users\hp\source\repos\ApiGatewayService\obj\Debug\net6.0\ApiGatewayService.pdb
 C:\Users\hp\source\repos\ApiGatewayService\obj\Debug\net6.0\ApiGatewayService.genruntimeconfig.cache
 C:\Users\hp\source\repos\ApiGatewayService\obj\Debug\net6.0\ref\ApiGatewayService.dll
+C:\Users\hp\source\repos\ApiGatewayService\bin\Debug\net6.0\Newtonsoft.Json.dll
