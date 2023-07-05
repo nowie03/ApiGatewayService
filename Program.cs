@@ -14,6 +14,8 @@ namespace ApiGatewayService
 
             builder.Services.AddHttpClient<IAuthenticationService, AuthenticationService>();
             builder.Services.AddHttpClient<IInventoryService, InventoryService>();
+            builder.Services.AddHttpClient<IReviewService, ReviewService>();
+
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

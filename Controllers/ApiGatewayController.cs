@@ -12,12 +12,14 @@ namespace ApiGatewayService.Controllers
     {
         private IAuthenticationService _authenticationService;
         private IInventoryService _inventoryService;
+        private IReviewService _reviewService;
 
-        public ApiGatewayController( IAuthenticationService authenticationService,IInventoryService inventoryService)
+        public ApiGatewayController( IAuthenticationService authenticationService,IInventoryService inventoryService,IReviewService reviewService)
         {
            
             _authenticationService = authenticationService;
             _inventoryService = inventoryService;
+            _reviewService = reviewService;
         }
 
         [HttpPost]
@@ -81,6 +83,44 @@ namespace ApiGatewayService.Controllers
             return Ok(response);
         }
 
-      
+
+        [HttpGet]
+        [Route("reviews")]
+        public async Task<ActionResult<IEnumerable<Review>>> GetReviews(int productId)
+        {
+            var response = await _reviewService.GetReviewsForProductAsync(productId) ;
+
+            if (response == null)
+                return BadRequest();
+
+            return Ok(response);
+        }
+
+        [HttpPost]
+        [Route("reviews")]
+        public async Task<ActionResult<Review>> PostReview(Review review)
+        {
+            var response = await _reviewService.PostReviewForProductAsync(review);
+
+            if (response == null)
+                return BadRequest();
+
+            return Ok(response);
+        }
+
+
+        [HttpPut]
+        [Route("reviews")]
+        public async Task<ActionResult<Review>> PuttReview(int reviewId,Review review)
+        {
+            var response = await _reviewService.UpdateReviewForProductAsync(reviewId,review);
+
+            if (response == null)
+                return BadRequest();
+
+            return Ok(response);
+        }
+
+
     }
 }
