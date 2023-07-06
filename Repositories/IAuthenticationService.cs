@@ -7,7 +7,7 @@ namespace ApiGatewayService.Repositories
 {
     public interface IAuthenticationService
     {
-        public  Task Validate();
+        public  Task<bool> Validate(string token);
 
 
         public Task<LoginResponse?> Login(LoginRequest request);

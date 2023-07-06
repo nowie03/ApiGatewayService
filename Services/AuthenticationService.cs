@@ -5,6 +5,7 @@ using ApiGatewayService.RequestModels;
 using ApiGatewayService.ResponseModels;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Net.Http;
 
 namespace ApiGatewayService.Services
 {
@@ -44,9 +45,29 @@ namespace ApiGatewayService.Services
             }
         }
 
-        public Task Validate()
+        public async Task<bool> Validate(string bearerToken)
         {
-            throw new NotImplementedException();
+            try {
+                var response = await _httpClient.GetAsync($"{BASE_ADDRESS}/validate?token={bearerToken}");
+
+                Console.WriteLine(response);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = response.Content.ReadAsStringAsync().Result;
+
+                    bool result = JsonConvert.DeserializeObject<bool>(content);
+
+                    return result;
+                }
+
+                return false;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
         }
 
         public async Task<User?> SignUp(User user)

@@ -1,3 +1,4 @@
+using ApiGatewayService.Middlewares;
 using ApiGatewayService.Repositories;
 using ApiGatewayService.Services;
 
@@ -37,7 +38,7 @@ namespace ApiGatewayService
 
 
             app.MapControllers();
-
+            app.UseAuthorizationMiddleware();
             app.Run();
         }
     }
