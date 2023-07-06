@@ -14,14 +14,20 @@ namespace ApiGatewayService.Controllers
         private IInventoryService _inventoryService;
         private IReviewService _reviewService;
         private IOrderService _orderService;
+        private ICartService _cartService;
 
-        public ApiGatewayController( IAuthenticationService authenticationService, IInventoryService inventoryService, IReviewService reviewService, IOrderService orderService = null)
+        public ApiGatewayController( IAuthenticationService authenticationService
+            , IInventoryService inventoryService
+            , IReviewService reviewService
+            , IOrderService orderService
+            ,ICartService cartService)
         {
 
             _authenticationService = authenticationService;
             _inventoryService = inventoryService;
             _reviewService = reviewService;
             _orderService = orderService;
+            _cartService = cartService;
         }
 
         [HttpPost]
@@ -185,6 +191,81 @@ namespace ApiGatewayService.Controllers
             return Ok(response);
         }
 
+        [HttpGet]
+        [Route("cart")]
+        public async Task<ActionResult<Cart>> GetCart(int userId)
+        {
+            var response=await _cartService.GetCartForUserAsync(userId);
 
+            if (response == null)
+            {
+                return BadRequest(response);
+            }
+
+                return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("cart/cartItems")]
+        public async Task<ActionResult<Cart>> GetCartItems(int cartId)
+        {
+            var response = await _cartService.GetCartItemsFromCartAsync(cartId);
+
+            if (response == null)
+            {
+                return BadRequest(response);
+            }
+
+            return Ok(response);
+        }
+
+
+        [HttpPost]
+        [Route("cart/checkout")]
+        public async Task<ActionResult<bool>> CheckOutCart(int cartId)
+        {
+            var response=await _cartService.CheckOutCartAsync(cartId);
+
+            if(response==false)
+                return BadRequest(response);
+
+            return Ok(response);
+        }
+
+
+        [HttpPost]
+        [Route("cart")]
+        public async Task<ActionResult<CartItem>> AddItemToCart(CartItem cartItem)
+        {
+           
+
+            var response = await _cartService.PostCartItemToCartAsync(cartItem);
+
+            if (response == null)
+                return BadRequest();
+
+            return Ok(response);
+        }
+
+
+        [HttpDelete]
+        [Route("carts")]
+        public async Task<ActionResult<bool>> DeleteCartItem(int cartItemId,int orderId)
+        {
+
+            //delete order then delete cartitem
+             
+            var orderDeletResponse= await _orderService.DeleteOrderForUserAsync(orderId);
+
+            if (orderDeletResponse == false)
+                return BadRequest(orderDeletResponse);
+                
+            var cartItemDeleteResponse =await _cartService.DeleteCartItemFromCartAsync(cartItemId);
+
+            if (cartItemDeleteResponse == false)
+                return BadRequest(cartItemDeleteResponse);
+
+            return Ok(true);
+        }
     }
 }

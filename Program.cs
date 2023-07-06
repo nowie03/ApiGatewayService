@@ -16,6 +16,7 @@ namespace ApiGatewayService
             builder.Services.AddHttpClient<IInventoryService, InventoryService>();
             builder.Services.AddHttpClient<IReviewService, ReviewService>();
             builder.Services.AddHttpClient<IOrderService, OrderService>();
+            builder.Services.AddHttpClient<ICartService, CartService>();    
 
 
             builder.Services.AddControllers();
