@@ -9,6 +9,7 @@ namespace ApiGatewayService.Repositories
     {
         public  Task Validate();
 
+
         public Task<LoginResponse?> Login(LoginRequest request);
 
       

@@ -15,12 +15,15 @@ namespace ApiGatewayService.Controllers
         private IReviewService _reviewService;
         private IOrderService _orderService;
         private ICartService _cartService;
+        private IPaymentService _paymentService;
 
         public ApiGatewayController( IAuthenticationService authenticationService
             , IInventoryService inventoryService
             , IReviewService reviewService
             , IOrderService orderService
-            ,ICartService cartService)
+            ,ICartService cartService
+            ,IPaymentService paymentService)
+            
         {
 
             _authenticationService = authenticationService;
@@ -28,6 +31,7 @@ namespace ApiGatewayService.Controllers
             _reviewService = reviewService;
             _orderService = orderService;
             _cartService = cartService;
+            _paymentService= paymentService;
         }
 
         [HttpPost]
@@ -266,6 +270,30 @@ namespace ApiGatewayService.Controllers
                 return BadRequest(cartItemDeleteResponse);
 
             return Ok(true);
+        }
+
+        [HttpGet]
+        [Route("payments")]
+        public async Task<ActionResult<Payment>> GetPaymentsForOrder(int orderId)
+        {
+            var response = await _paymentService.GetPaymentForOrderAsync(orderId);
+
+            if (response == null)
+                return BadRequest();
+
+            return Ok(response);
+        }
+
+        [HttpPut]
+        [Route("payments")]
+        public async Task<ActionResult<Payment>> UpdatePayment(int paymentId,Payment payment)
+        {
+            var response=await _paymentService.UpdateStatusForPaymentAsync(paymentId, payment);
+
+            if (response == null)
+                return BadRequest();
+
+            return Ok(response);
         }
     }
 }
