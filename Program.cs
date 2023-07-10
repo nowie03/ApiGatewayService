@@ -11,6 +11,15 @@ namespace ApiGatewayService
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSameDomain", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
 
 
             builder.Services.AddHttpClient<IAuthenticationService, AuthenticationService>();
@@ -32,7 +41,16 @@ namespace ApiGatewayService
          
                 app.UseSwagger();
                 app.UseSwaggerUI();
-            
+
+            //app.UseCors(policy =>
+            //{
+            //    policy.AllowAnyOrigin();
+            //    policy.AllowAnyHeader();
+            //    policy.AllowAnyMethod();
+            //});
+
+            app.UseCors("AllowSameDomain");
+
 
             app.UseAuthorization();
 
