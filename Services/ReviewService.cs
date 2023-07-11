@@ -26,11 +26,11 @@ namespace ApiGatewayService.Services
                     return reviews;
                 }
 
-                return new List<Review>();
+                return Enumerable.Empty<Review>();
             }
             catch (Exception ex){
                 Console.WriteLine(ex.Message);
-                return new List<Review>();
+                return Enumerable.Empty<Review>();
 
             }
         }

@@ -87,13 +87,14 @@ namespace ApiGatewayService.Services
 
                     return cartItems;
                 }
+                return Enumerable.Empty<CartItem>();
 
-                return new List<CartItem>();
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                return new List<CartItem>();
+                return Enumerable.Empty<CartItem>();
+
 
             }
         }

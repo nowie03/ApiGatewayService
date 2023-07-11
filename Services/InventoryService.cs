@@ -28,11 +28,12 @@ namespace ApiGatewayService.Services
                     return categories;
                 }
 
-                else return new List<Category>();
+                else return Enumerable.Empty<Category>();
+
             }
-            catch(Exception ex) {
+            catch (Exception ex) {
                 Console.WriteLine(ex.Message);
-                return new List<Category>();
+                return Enumerable.Empty<Category>();
             }
         }
 
@@ -78,12 +79,12 @@ namespace ApiGatewayService.Services
                     return products;
                 }
 
-                else return new List<ProductGetResponse>();
+                else return Enumerable.Empty<ProductGetResponse>();
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                return new List<ProductGetResponse>();
+                return Enumerable.Empty<ProductGetResponse>();
             }
         }
     }

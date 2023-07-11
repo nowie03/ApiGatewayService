@@ -10,19 +10,21 @@ namespace ApiGatewayService.Controllers
     [Route("[controller]")]
     public class ApiGatewayController : Controller
     {
-        private IAuthenticationService _authenticationService;
-        private IInventoryService _inventoryService;
-        private IReviewService _reviewService;
-        private IOrderService _orderService;
-        private ICartService _cartService;
-        private IPaymentService _paymentService;
+        private readonly IAuthenticationService _authenticationService;
+        private readonly IInventoryService _inventoryService;
+        private readonly IReviewService _reviewService;
+        private readonly IOrderService _orderService;
+        private readonly ICartService _cartService;
+        private readonly IPaymentService _paymentService;
+        private readonly IUserService _userService;
 
         public ApiGatewayController( IAuthenticationService authenticationService
             , IInventoryService inventoryService
             , IReviewService reviewService
             , IOrderService orderService
             ,ICartService cartService
-            ,IPaymentService paymentService)
+            ,IPaymentService paymentService
+            ,IUserService userService)
             
         {
 
@@ -32,6 +34,7 @@ namespace ApiGatewayService.Controllers
             _orderService = orderService;
             _cartService = cartService;
             _paymentService= paymentService;
+            _userService = userService;
         }
 
         [HttpPost]
@@ -294,6 +297,42 @@ namespace ApiGatewayService.Controllers
                 return BadRequest();
 
             return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("address")]
+        public async Task<ActionResult<IEnumerable<UserAddress>>>GetUserAddress(int userId)
+        {
+            var response=await _userService.GetAddressesOfUserAsync(userId);
+
+            if(response==null)
+                return BadRequest();
+
+            return Ok(response);
+        }
+
+        [HttpPost]
+        [Route("address")]
+        public async Task<ActionResult<UserAddress>> PostUserAddress(UserAddress userAddress)
+        {
+            var response = await _userService.PostUserAddressOfUserAsync(userAddress);
+
+            if (response == null)
+                return BadRequest();
+
+            return Ok(userAddress);
+        }
+
+        [HttpDelete]
+        [Route("address")]
+        public async Task<ActionResult<bool>>DeleteUserAddress(int addressId)
+        {
+            var resposne = await _userService.DeleteUserAddressOfUserAsync(addressId);
+
+            if (resposne == false)
+                return BadRequest();
+
+            return Ok(true);
         }
     }
 }

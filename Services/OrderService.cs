@@ -64,11 +64,11 @@ namespace ApiGatewayService.Services
 
                     return orders;
                 }
-                return new List<Order>();
+                return Enumerable.Empty<Order>();
             }
             catch (Exception ex){ 
                 Console.WriteLine(ex.Message );
-                return new List<Order>();
+                return Enumerable.Empty<Order>();
             }
         }
 

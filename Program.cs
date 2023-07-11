@@ -28,6 +28,8 @@ namespace ApiGatewayService
             builder.Services.AddHttpClient<IOrderService, OrderService>();
             builder.Services.AddHttpClient<ICartService, CartService>();    
             builder.Services.AddHttpClient<IPaymentService,PaymentService>();
+            builder.Services.AddHttpClient<IUserService, UserService>();
+
 
 
             builder.Services.AddControllers();
