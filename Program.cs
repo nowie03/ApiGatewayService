@@ -21,7 +21,7 @@ namespace ApiGatewayService
                 });
             });
 
-
+            //strongly typed httpclients inject as services
             builder.Services.AddHttpClient<IAuthenticationService, AuthenticationService>();
             builder.Services.AddHttpClient<IInventoryService, InventoryService>();
             builder.Services.AddHttpClient<IReviewService, ReviewService>();
@@ -37,9 +37,9 @@ namespace ApiGatewayService
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            var app = builder.Build();
 
             // Configure the HTTP request pipeline.
+            var app = builder.Build();
          
                 app.UseSwagger();
                 app.UseSwaggerUI();
