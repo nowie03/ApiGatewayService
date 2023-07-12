@@ -9,11 +9,11 @@ namespace ApiGatewayService.Middlewares
         private IAuthenticationService _authenticationService;
 
         public AuthorizationMiddleware(RequestDelegate next
-            ,IAuthenticationService authenticationService)
+            , IAuthenticationService authenticationService)
         {
             _authenticationService = authenticationService;
             _next = next;
-            ALLOWED_PATHS =new List<String>{
+            ALLOWED_PATHS = new List<String>{
                 "/ApiGateway/login"
                 ,"/ApiGateway/signup"
             };

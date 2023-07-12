@@ -8,47 +8,50 @@ namespace ApiGatewayService.Services
     {
         private HttpClient _httpClient;
         private readonly string BASE_ADDRESS;
-        public ReviewService(HttpClient httpClient,IConfiguration configuration )
+        public ReviewService(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
             BASE_ADDRESS = configuration.GetConnectionString("review-service");
         }
         public async Task<IEnumerable<Review>> GetReviewsForProductAsync(int productId)
         {
-            try {
+            try
+            {
                 var response = await _httpClient.GetAsync($"{BASE_ADDRESS}?productID={productId}");
 
-                if(response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
                 {
-                    string content=await response.Content.ReadAsStringAsync();
+                    string content = await response.Content.ReadAsStringAsync();
 
-                    IEnumerable<Review> reviews=JsonConvert.DeserializeObject<IEnumerable<Review>>(content);
+                    IEnumerable<Review> reviews = JsonConvert.DeserializeObject<IEnumerable<Review>>(content);
 
                     return reviews;
                 }
 
                 return Enumerable.Empty<Review>();
             }
-            catch (Exception ex){
+            catch (Exception ex)
+            {
                 Console.WriteLine(ex.Message);
                 return Enumerable.Empty<Review>();
 
             }
         }
 
-        public  async Task<Review?> PostReviewForProductAsync(Review review)
+        public async Task<Review?> PostReviewForProductAsync(Review review)
         {
             try
             {
                 var response = await _httpClient.PostAsJsonAsync($"{BASE_ADDRESS}", review);
 
-                if(response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
                 {
                     return review;
                 }
                 return null;
             }
-            catch(Exception ex) { 
+            catch (Exception ex)
+            {
 
                 Console.WriteLine(ex.Message);
                 return null;

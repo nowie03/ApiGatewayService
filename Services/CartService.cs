@@ -9,15 +9,16 @@ namespace ApiGatewayService.Services
         private HttpClient _httpClient;
         private readonly string BASE_ADDRESS;
 
-        public CartService(HttpClient httpClient,IConfiguration configuration)
+        public CartService(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
             BASE_ADDRESS = configuration.GetConnectionString("cart-service");
         }
         public async Task<bool> CheckOutCartAsync(int cartId)
         {
-           try{
-                var response = await _httpClient.PostAsJsonAsync($"{BASE_ADDRESS}/checkout?cartId={cartId}",cartId);
+            try
+            {
+                var response = await _httpClient.PostAsJsonAsync($"{BASE_ADDRESS}/checkout?cartId={cartId}", cartId);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -26,7 +27,8 @@ namespace ApiGatewayService.Services
 
                 return false;
             }
-            catch(Exception ex){
+            catch (Exception ex)
+            {
                 Console.WriteLine(ex.Message);
                 return false;
             }
@@ -34,19 +36,21 @@ namespace ApiGatewayService.Services
 
         public async Task<bool> DeleteCartItemFromCartAsync(int cartItemId)
         {
-           try{
+            try
+            {
 
                 var response = await _httpClient.DeleteAsync($"{BASE_ADDRESS}/cartItems?cartItemId={cartItemId}");
 
-                if(response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
                 {
                     return true;
                 }
 
                 return false;
-            
+
             }
-            catch(Exception ex){
+            catch (Exception ex)
+            {
                 Console.WriteLine(ex.Message);
                 return false;
             }
@@ -54,21 +58,23 @@ namespace ApiGatewayService.Services
 
         public async Task<Cart?> GetCartForUserAsync(int userId)
         {
-           try{
+            try
+            {
                 var response = await _httpClient.GetAsync($"{BASE_ADDRESS}/{userId}");
 
                 if (response.IsSuccessStatusCode)
                 {
-                    string content=await response.Content.ReadAsStringAsync();
+                    string content = await response.Content.ReadAsStringAsync();
 
-                    Cart cart=JsonConvert.DeserializeObject<Cart>(content);
+                    Cart cart = JsonConvert.DeserializeObject<Cart>(content);
 
                     return cart;
                 }
 
                 return null;
             }
-            catch(Exception ex){
+            catch (Exception ex)
+            {
                 Console.WriteLine(ex.Message);
                 return null;
             }
@@ -80,11 +86,11 @@ namespace ApiGatewayService.Services
             {
                 var response = await _httpClient.GetAsync($"{BASE_ADDRESS}/cartItems?cartId={cartId}");
 
-                if(response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
                 {
-                    string content= await response.Content.ReadAsStringAsync();
+                    string content = await response.Content.ReadAsStringAsync();
 
-                    IEnumerable<CartItem> cartItems=JsonConvert.DeserializeObject<IEnumerable<CartItem>>(content);
+                    IEnumerable<CartItem> cartItems = JsonConvert.DeserializeObject<IEnumerable<CartItem>>(content);
 
                     return cartItems;
                 }
@@ -106,20 +112,21 @@ namespace ApiGatewayService.Services
             {
                 var response = await _httpClient.PostAsJsonAsync($"{BASE_ADDRESS}/cartItems", cartItem);
 
-                if(response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
                 {
                     return cartItem;
                 }
 
                 return null;
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 Console.WriteLine(ex.Message);
                 return null;
-            
+
             }
         }
 
-        
+
     }
 }

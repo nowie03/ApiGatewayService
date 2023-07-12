@@ -26,8 +26,8 @@ namespace ApiGatewayService
             builder.Services.AddHttpClient<IInventoryService, InventoryService>();
             builder.Services.AddHttpClient<IReviewService, ReviewService>();
             builder.Services.AddHttpClient<IOrderService, OrderService>();
-            builder.Services.AddHttpClient<ICartService, CartService>();    
-            builder.Services.AddHttpClient<IPaymentService,PaymentService>();
+            builder.Services.AddHttpClient<ICartService, CartService>();
+            builder.Services.AddHttpClient<IPaymentService, PaymentService>();
             builder.Services.AddHttpClient<IUserService, UserService>();
 
 
@@ -40,11 +40,11 @@ namespace ApiGatewayService
 
             // Configure the HTTP request pipeline.
             var app = builder.Build();
-         
-                app.UseSwagger();
-                app.UseSwaggerUI();
 
-           
+            app.UseSwagger();
+            app.UseSwaggerUI();
+
+
 
             app.UseCors("AllowSameDomain");
 

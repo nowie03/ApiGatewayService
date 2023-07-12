@@ -6,6 +6,6 @@ namespace ApiGatewayService.Repositories
     {
         public Task<Payment?> GetPaymentForOrderAsync(int orderId);
 
-        public Task<Payment?> UpdateStatusForPaymentAsync(int paymentId, Payment payment); 
+        public Task<Payment?> UpdateStatusForPaymentAsync(int paymentId, Payment payment);
     }
 }

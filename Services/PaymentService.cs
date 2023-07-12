@@ -7,10 +7,10 @@ namespace ApiGatewayService.Services
     public class PaymentService : IPaymentService
     {
         private HttpClient _httpClient;
-        private readonly string BASE_ADDRESS ;
+        private readonly string BASE_ADDRESS;
 
         public PaymentService(HttpClient httpClient, IConfiguration configuration)
-        {   
+        {
             _httpClient = httpClient;
             BASE_ADDRESS = configuration.GetConnectionString("payment-service");
 
@@ -20,11 +20,11 @@ namespace ApiGatewayService.Services
         {
             try
             {
-                var response =await _httpClient.GetAsync($"{BASE_ADDRESS}/order?orderId={orderId}");
+                var response = await _httpClient.GetAsync($"{BASE_ADDRESS}/order?orderId={orderId}");
 
-                if(response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
                 {
-                    string content =await response.Content.ReadAsStringAsync();
+                    string content = await response.Content.ReadAsStringAsync();
 
                     Payment payment = JsonConvert.DeserializeObject<Payment>(content);
 
@@ -33,7 +33,8 @@ namespace ApiGatewayService.Services
 
                 return null;
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 Console.WriteLine(ex.Message);
                 return null;
             }
@@ -41,7 +42,8 @@ namespace ApiGatewayService.Services
 
         public async Task<Payment?> UpdateStatusForPaymentAsync(int paymentId, Payment payment)
         {
-           try{
+            try
+            {
                 var response = await _httpClient.PutAsJsonAsync($"{BASE_ADDRESS}/{paymentId}", payment);
 
                 if (response.IsSuccessStatusCode)
@@ -50,7 +52,8 @@ namespace ApiGatewayService.Services
                 }
                 return null;
             }
-            catch(Exception ex){
+            catch (Exception ex)
+            {
                 Console.WriteLine(ex.Message);
                 return null;
             }

@@ -18,14 +18,14 @@ namespace ApiGatewayService.Controllers
         private readonly IPaymentService _paymentService;
         private readonly IUserService _userService;
 
-        public ApiGatewayController( IAuthenticationService authenticationService
+        public ApiGatewayController(IAuthenticationService authenticationService
             , IInventoryService inventoryService
             , IReviewService reviewService
             , IOrderService orderService
-            ,ICartService cartService
-            ,IPaymentService paymentService
-            ,IUserService userService)
-            
+            , ICartService cartService
+            , IPaymentService paymentService
+            , IUserService userService)
+
         {
 
             _authenticationService = authenticationService;
@@ -33,7 +33,7 @@ namespace ApiGatewayService.Controllers
             _reviewService = reviewService;
             _orderService = orderService;
             _cartService = cartService;
-            _paymentService= paymentService;
+            _paymentService = paymentService;
             _userService = userService;
         }
 
@@ -56,7 +56,7 @@ namespace ApiGatewayService.Controllers
 
             var response = await _authenticationService.SignUp(user);
 
-            if(response==null)return BadRequest();
+            if (response == null) return BadRequest();
 
             return Ok(response);
         }
@@ -66,7 +66,7 @@ namespace ApiGatewayService.Controllers
         [Route("products/category")]
         public async Task<ActionResult<IEnumerable<Category>>> GetCategories()
         {
-            var response =await _inventoryService.GetCategoriesAsync();
+            var response = await _inventoryService.GetCategoriesAsync();
 
             if (response == null)
                 return BadRequest();
@@ -76,9 +76,9 @@ namespace ApiGatewayService.Controllers
 
         [HttpGet]
         [Route("products")]
-        public async Task<ActionResult<IEnumerable<ProductGetResponse>>> GetProducts(int limit,int skip)
+        public async Task<ActionResult<IEnumerable<ProductGetResponse>>> GetProducts(int limit, int skip)
         {
-            var response = await _inventoryService.GetProductsAsync(limit,skip);
+            var response = await _inventoryService.GetProductsAsync(limit, skip);
 
             if (response == null)
                 return BadRequest();
@@ -103,7 +103,7 @@ namespace ApiGatewayService.Controllers
         [Route("reviews")]
         public async Task<ActionResult<IEnumerable<Review>>> GetReviews(int productId)
         {
-            var response = await _reviewService.GetReviewsForProductAsync(productId) ;
+            var response = await _reviewService.GetReviewsForProductAsync(productId);
 
             if (response == null)
                 return BadRequest();
@@ -126,9 +126,9 @@ namespace ApiGatewayService.Controllers
 
         [HttpPut]
         [Route("reviews")]
-        public async Task<ActionResult<Review>> PutReview(int reviewId,Review review)
+        public async Task<ActionResult<Review>> PutReview(int reviewId, Review review)
         {
-            var response = await _reviewService.UpdateReviewForProductAsync(reviewId,review);
+            var response = await _reviewService.UpdateReviewForProductAsync(reviewId, review);
 
             if (response == null)
                 return BadRequest();
@@ -188,11 +188,11 @@ namespace ApiGatewayService.Controllers
 
         [HttpDelete]
         [Route("orders")]
-        public async Task<ActionResult<bool>>DeleteOrder(int orderId)
+        public async Task<ActionResult<bool>> DeleteOrder(int orderId)
         {
             var response = await _orderService.DeleteOrderForUserAsync(orderId);
 
-            if(response==false)
+            if (response == false)
                 return BadRequest();
 
             return Ok(response);
@@ -202,14 +202,14 @@ namespace ApiGatewayService.Controllers
         [Route("cart")]
         public async Task<ActionResult<Cart>> GetCart(int userId)
         {
-            var response=await _cartService.GetCartForUserAsync(userId);
+            var response = await _cartService.GetCartForUserAsync(userId);
 
             if (response == null)
             {
                 return BadRequest(response);
             }
 
-                return Ok(response);
+            return Ok(response);
         }
 
         [HttpGet]
@@ -231,9 +231,9 @@ namespace ApiGatewayService.Controllers
         [Route("cart/checkout")]
         public async Task<ActionResult<bool>> CheckOutCart(int cartId)
         {
-            var response=await _cartService.CheckOutCartAsync(cartId);
+            var response = await _cartService.CheckOutCartAsync(cartId);
 
-            if(response==false)
+            if (response == false)
                 return BadRequest(response);
 
             return Ok(response);
@@ -244,7 +244,7 @@ namespace ApiGatewayService.Controllers
         [Route("cart")]
         public async Task<ActionResult<CartItem>> AddItemToCart(CartItem cartItem)
         {
-           
+
 
             var response = await _cartService.PostCartItemToCartAsync(cartItem);
 
@@ -257,17 +257,17 @@ namespace ApiGatewayService.Controllers
 
         [HttpDelete]
         [Route("carts")]
-        public async Task<ActionResult<bool>> DeleteCartItem(int cartItemId,int orderId)
+        public async Task<ActionResult<bool>> DeleteCartItem(int cartItemId, int orderId)
         {
 
             //delete order then delete cartitem
-             
-            var orderDeletResponse= await _orderService.DeleteOrderForUserAsync(orderId);
+
+            var orderDeletResponse = await _orderService.DeleteOrderForUserAsync(orderId);
 
             if (orderDeletResponse == false)
                 return BadRequest(orderDeletResponse);
-                
-            var cartItemDeleteResponse =await _cartService.DeleteCartItemFromCartAsync(cartItemId);
+
+            var cartItemDeleteResponse = await _cartService.DeleteCartItemFromCartAsync(cartItemId);
 
             if (cartItemDeleteResponse == false)
                 return BadRequest(cartItemDeleteResponse);
@@ -289,9 +289,9 @@ namespace ApiGatewayService.Controllers
 
         [HttpPut]
         [Route("payments")]
-        public async Task<ActionResult<Payment>> UpdatePayment(int paymentId,Payment payment)
+        public async Task<ActionResult<Payment>> UpdatePayment(int paymentId, Payment payment)
         {
-            var response=await _paymentService.UpdateStatusForPaymentAsync(paymentId, payment);
+            var response = await _paymentService.UpdateStatusForPaymentAsync(paymentId, payment);
 
             if (response == null)
                 return BadRequest();
@@ -301,11 +301,11 @@ namespace ApiGatewayService.Controllers
 
         [HttpGet]
         [Route("address")]
-        public async Task<ActionResult<IEnumerable<UserAddress>>>GetUserAddress(int userId)
+        public async Task<ActionResult<IEnumerable<UserAddress>>> GetUserAddress(int userId)
         {
-            var response=await _userService.GetAddressesOfUserAsync(userId);
+            var response = await _userService.GetAddressesOfUserAsync(userId);
 
-            if(response==null)
+            if (response == null)
                 return BadRequest();
 
             return Ok(response);
@@ -325,7 +325,7 @@ namespace ApiGatewayService.Controllers
 
         [HttpDelete]
         [Route("address")]
-        public async Task<ActionResult<bool>>DeleteUserAddress(int addressId)
+        public async Task<ActionResult<bool>> DeleteUserAddress(int addressId)
         {
             var resposne = await _userService.DeleteUserAddressOfUserAsync(addressId);
 

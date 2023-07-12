@@ -3,9 +3,7 @@ using ApiGatewayService.Models;
 using ApiGatewayService.Repositories;
 using ApiGatewayService.RequestModels;
 using ApiGatewayService.ResponseModels;
-using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Net.Http;
 
 namespace ApiGatewayService.Services
 {
@@ -13,8 +11,8 @@ namespace ApiGatewayService.Services
     {
         private HttpClient _httpClient;
         private readonly string BASE_ADDRESS;
-     
-        public AuthenticationService(HttpClient httpClient,IConfiguration configuration)
+
+        public AuthenticationService(HttpClient httpClient, IConfiguration configuration)
         {
             BASE_ADDRESS = configuration.GetConnectionString("authentication-service");
             _httpClient = httpClient;
@@ -23,24 +21,24 @@ namespace ApiGatewayService.Services
         {
             try
             {
-              
+
 
                 var response = await _httpClient.PostAsJsonAsync($"{BASE_ADDRESS}/login", request);
 
                 // Deserialize the response
                 if (response.IsSuccessStatusCode)
                 {
-                    string content=response.Content.ReadAsStringAsync().Result;
+                    string content = response.Content.ReadAsStringAsync().Result;
                     Console.WriteLine(content);
-                    LoginResponse loginResponse=JsonConvert.DeserializeObject<LoginResponse>(content);
+                    LoginResponse loginResponse = JsonConvert.DeserializeObject<LoginResponse>(content);
                     return loginResponse;
                 }
 
                 return null;
-              
+
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 return null;
@@ -49,7 +47,8 @@ namespace ApiGatewayService.Services
 
         public async Task<bool> Validate(string bearerToken)
         {
-            try {
+            try
+            {
                 var response = await _httpClient.GetAsync($"{BASE_ADDRESS}/validate?token={bearerToken}");
 
                 Console.WriteLine(response);
@@ -65,7 +64,7 @@ namespace ApiGatewayService.Services
 
                 return false;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 return false;
@@ -84,7 +83,7 @@ namespace ApiGatewayService.Services
                 if (response.IsSuccessStatusCode)
                 {
                     return user;
-                   
+
                 }
 
                 return null;

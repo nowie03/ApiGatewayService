@@ -8,16 +8,17 @@ namespace ApiGatewayService.Services
     public class InventoryService : IInventoryService
     {
         private HttpClient _httpClient;
-        private readonly string BASE_ADDRESS ; 
+        private readonly string BASE_ADDRESS;
 
-        public InventoryService(HttpClient httpClient,IConfiguration configuration)
+        public InventoryService(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
             BASE_ADDRESS = configuration.GetConnectionString("inventory-service");
         }
         public async Task<IEnumerable<Category>> GetCategoriesAsync()
         {
-            try {
+            try
+            {
                 var response = await _httpClient.GetAsync($"{BASE_ADDRESS}/category");
 
                 if (response.IsSuccessStatusCode)
@@ -32,7 +33,8 @@ namespace ApiGatewayService.Services
                 else return Enumerable.Empty<Category>();
 
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 Console.WriteLine(ex.Message);
                 return Enumerable.Empty<Category>();
             }
@@ -40,12 +42,13 @@ namespace ApiGatewayService.Services
 
         public async Task<ProductGetResponse?> GetProductAsync(int productId)
         {
-            try {
+            try
+            {
                 var response = await _httpClient.GetAsync($"{BASE_ADDRESS}/{productId}");
 
                 if (response.IsSuccessStatusCode)
                 {
-                    string content=response.Content.ReadAsStringAsync().Result;
+                    string content = response.Content.ReadAsStringAsync().Result;
                     ProductGetResponse product = JsonConvert.DeserializeObject<ProductGetResponse>(content);
 
                     return product;
@@ -53,19 +56,19 @@ namespace ApiGatewayService.Services
 
                 return null;
 
-                
+
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 return null;
             }
         }
 
-        
 
-        public async  Task<IEnumerable<ProductGetResponse>> GetProductsAsync(int limit, int skip)
+
+        public async Task<IEnumerable<ProductGetResponse>> GetProductsAsync(int limit, int skip)
         {
             try
             {

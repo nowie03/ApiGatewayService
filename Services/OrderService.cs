@@ -16,16 +16,19 @@ namespace ApiGatewayService.Services
 
         public async Task<bool> CheckOutOrderAsync(int orderId)
         {
-            try {
+            try
+            {
                 var response = await _httpClient.PostAsJsonAsync($"{BASE_ADDRESS}?orderId={orderId}", orderId);
-                if(response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
                 {
                     return true;
                 }
 
                 return false;
 
-            } catch (Exception ex){
+            }
+            catch (Exception ex)
+            {
 
                 Console.WriteLine(ex.Message);
                 return false;
@@ -42,11 +45,12 @@ namespace ApiGatewayService.Services
                 {
                     return true;
                 }
-                
-             return false;
+
+                return false;
             }
-            catch (Exception ex) {
-                
+            catch (Exception ex)
+            {
+
                 Console.WriteLine(ex.Message);
                 return false;
             }
@@ -54,28 +58,31 @@ namespace ApiGatewayService.Services
 
         public async Task<IEnumerable<Order>> GetOrdersForUserAsync(int userId)
         {
-            try {
+            try
+            {
                 var response = await _httpClient.GetAsync($"{BASE_ADDRESS}?userId={userId}");
 
                 if (response.IsSuccessStatusCode)
                 {
-                    string content= await response.Content.ReadAsStringAsync();
+                    string content = await response.Content.ReadAsStringAsync();
 
-                    IEnumerable<Order> orders=JsonConvert.DeserializeObject<IEnumerable<Order>>(content);
+                    IEnumerable<Order> orders = JsonConvert.DeserializeObject<IEnumerable<Order>>(content);
 
                     return orders;
                 }
                 return Enumerable.Empty<Order>();
             }
-            catch (Exception ex){ 
-                Console.WriteLine(ex.Message );
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
                 return Enumerable.Empty<Order>();
             }
         }
 
-        public  async Task<Order?> PostOrderForUserAsync(Order order)
+        public async Task<Order?> PostOrderForUserAsync(Order order)
         {
-            try {
+            try
+            {
                 var response = await _httpClient.PostAsJsonAsync($"{BASE_ADDRESS}", order);
                 if (response.IsSuccessStatusCode)
                 {
@@ -84,13 +91,14 @@ namespace ApiGatewayService.Services
 
                 return null;
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 Console.WriteLine(ex.Message);
                 return null;
             }
         }
 
-        public async  Task<Order?> PutOrderForUserAsync(int orderId, Order order)
+        public async Task<Order?> PutOrderForUserAsync(int orderId, Order order)
         {
             try
             {
