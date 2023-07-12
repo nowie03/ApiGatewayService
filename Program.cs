@@ -44,12 +44,7 @@ namespace ApiGatewayService
                 app.UseSwagger();
                 app.UseSwaggerUI();
 
-            //app.UseCors(policy =>
-            //{
-            //    policy.AllowAnyOrigin();
-            //    policy.AllowAnyHeader();
-            //    policy.AllowAnyMethod();
-            //});
+           
 
             app.UseCors("AllowSameDomain");
 
