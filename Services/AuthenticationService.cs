@@ -12,9 +12,11 @@ namespace ApiGatewayService.Services
     public class AuthenticationService : IAuthenticationService
     {
         private HttpClient _httpClient;
-        private readonly string BASE_ADDRESS = "http://localhost:5035/api/Users";
-        public AuthenticationService(HttpClient httpClient)
+        private readonly string BASE_ADDRESS;
+     
+        public AuthenticationService(HttpClient httpClient,IConfiguration configuration)
         {
+            BASE_ADDRESS = configuration.GetConnectionString("authentication-service");
             _httpClient = httpClient;
         }
         public async Task<LoginResponse?> Login(LoginRequest request)

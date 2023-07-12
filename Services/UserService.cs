@@ -7,11 +7,13 @@ namespace ApiGatewayService.Services
     public class UserService : IUserService
     {
         private HttpClient _httpClient;
-        private readonly string BASE_ADDRESS = "http://localhost:5005/api/Users/address";
+        private readonly string BASE_ADDRESS ;
 
-        public UserService(HttpClient httpClient)
+        public UserService(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
+            BASE_ADDRESS = configuration.GetConnectionString("user-service");
+
         }
 
         public async Task<bool> DeleteUserAddressOfUserAsync(int userAddressId)

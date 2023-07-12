@@ -7,11 +7,12 @@ namespace ApiGatewayService.Services
     public class PaymentService : IPaymentService
     {
         private HttpClient _httpClient;
-        private readonly string BASE_ADDRESS = "http://localhost:5025/api/Payments";
+        private readonly string BASE_ADDRESS ;
 
-        public PaymentService(HttpClient httpClient)
+        public PaymentService(HttpClient httpClient, IConfiguration configuration)
         {   
             _httpClient = httpClient;
+            BASE_ADDRESS = configuration.GetConnectionString("payment-service");
 
         }
 

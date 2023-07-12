@@ -7,10 +7,11 @@ namespace ApiGatewayService.Services
     public class ReviewService : IReviewService
     {
         private HttpClient _httpClient;
-        private readonly string BASE_ADDRESS = "http://localhost:5030/api/Reviews";
-        public ReviewService(HttpClient httpClient )
+        private readonly string BASE_ADDRESS;
+        public ReviewService(HttpClient httpClient,IConfiguration configuration )
         {
             _httpClient = httpClient;
+            BASE_ADDRESS = configuration.GetConnectionString("review-service");
         }
         public async Task<IEnumerable<Review>> GetReviewsForProductAsync(int productId)
         {

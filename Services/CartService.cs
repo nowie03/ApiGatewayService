@@ -7,11 +7,12 @@ namespace ApiGatewayService.Services
     public class CartService : ICartService
     {
         private HttpClient _httpClient;
-        private readonly string BASE_ADDRESS = "http://localhost:5020/api/Carts";
+        private readonly string BASE_ADDRESS;
 
-        public CartService(HttpClient httpClient)
+        public CartService(HttpClient httpClient,IConfiguration configuration)
         {
             _httpClient = httpClient;
+            BASE_ADDRESS = configuration.GetConnectionString("cart-service");
         }
         public async Task<bool> CheckOutCartAsync(int cartId)
         {

@@ -8,11 +8,12 @@ namespace ApiGatewayService.Services
     public class InventoryService : IInventoryService
     {
         private HttpClient _httpClient;
-        private readonly string BASE_ADDRESS = "http://localhost:5010/api/Products"; 
+        private readonly string BASE_ADDRESS ; 
 
-        public InventoryService(HttpClient httpClient)
+        public InventoryService(HttpClient httpClient,IConfiguration configuration)
         {
             _httpClient = httpClient;
+            BASE_ADDRESS = configuration.GetConnectionString("inventory-service");
         }
         public async Task<IEnumerable<Category>> GetCategoriesAsync()
         {

@@ -7,10 +7,11 @@ namespace ApiGatewayService.Services
     public class OrderService : IOrderService
     {
         private HttpClient _httpClient;
-        private readonly string BASE_ADDRESS = "http://localhost:5015/api/Orders";
-        public OrderService(HttpClient httpClient)
+        private readonly string BASE_ADDRESS;
+        public OrderService(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
+            BASE_ADDRESS = configuration.GetConnectionString("order-service");
         }
 
         public async Task<bool> CheckOutOrderAsync(int orderId)
