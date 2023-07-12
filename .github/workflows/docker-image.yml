@@ -21,6 +21,6 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag microservice/apigateway-service:latest
+      run: docker build . --file Dockerfile --tag nowie03/capstone:apigateway-service
     - name : Docker Push
-      run : docker push ${{secrets.DOCKER_USER}}/capstone
+      run : docker push nowie03/capstone:apigateway-service
