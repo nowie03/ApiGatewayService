@@ -20,7 +20,7 @@ namespace ApiGatewayService.Services
         {
             try
             {
-                var response = await _httpClient.DeleteAsync($"{BASE_ADDRESS}?id={userAddressId}");
+                var response = await _httpClient.DeleteAsync($"{BASE_ADDRESS}/address?id={userAddressId}");
 
                 if (response.IsSuccessStatusCode)
                     return true;
@@ -39,7 +39,7 @@ namespace ApiGatewayService.Services
             try
             {
 
-                var response = await _httpClient.GetAsync($"{BASE_ADDRESS}?userId={userId}");
+                var response = await _httpClient.GetAsync($"{BASE_ADDRESS}/address?userId={userId}");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -64,7 +64,7 @@ namespace ApiGatewayService.Services
         {
             try
             {
-                var response = await _httpClient.PostAsJsonAsync(BASE_ADDRESS, userAddress);
+                var response = await _httpClient.PostAsJsonAsync($"{BASE_ADDRESS}/address",userAddress);
 
                 if (response.IsSuccessStatusCode)
                     return userAddress;
