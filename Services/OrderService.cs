@@ -86,7 +86,11 @@ namespace ApiGatewayService.Services
                 var response = await _httpClient.PostAsJsonAsync($"{BASE_ADDRESS}", order);
                 if (response.IsSuccessStatusCode)
                 {
-                    return order;
+                    string content = await response.Content.ReadAsStringAsync();
+
+                    Order orderResponse = JsonConvert.DeserializeObject<Order>(content);
+
+                    return orderResponse;
                 }
 
                 return null;

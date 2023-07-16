@@ -8,7 +8,7 @@ namespace ApiGatewayService.Models
         public int Id { get; set; }
 
         [Required]
-        public int ProdudtId { get; set; }
+        public int ProductId { get; set; }
 
         [Required]
         public int Quantity { get; set; }
