@@ -78,6 +78,23 @@ namespace ApiGatewayService.Services
             }
         }
 
+        public async Task<User> CreateUserAsync(User user)
+        {
+            try {
+                var response = await _httpClient.PostAsync(BASE_ADDRESS, user);
 
+                if (response.IsSuccessStatusCode)
+                {
+                    return user;
+                }
+
+                return null;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
     }
 }

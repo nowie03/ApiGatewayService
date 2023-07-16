@@ -54,7 +54,7 @@ namespace ApiGatewayService.Controllers
         public async Task<ActionResult<User?>> Signup(User user)
         {
 
-            var response = await _authenticationService.SignUp(user);
+            var response = await _userService.CreateUserAsync(user);
 
             if (response == null) return BadRequest();
 
