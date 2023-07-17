@@ -6,6 +6,8 @@ namespace ApiGatewayService.Repositories
     {
         public Task<IEnumerable<Order>> GetOrdersForUserAsync(int userId);
 
+        public Task<Order?> GetOrderAsync(int orderId);
+
         public Task<Order?> PostOrderForUserAsync(Order order);
 
         public Task<Order?> PutOrderForUserAsync(int orderId, Order order);

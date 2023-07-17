@@ -148,6 +148,18 @@ namespace ApiGatewayService.Controllers
             return Ok(response);
         }
 
+        [HttpGet]
+        [Route("order")]
+        public async Task<ActionResult<Order>> GetOrder(int orderId)
+        {
+            var response = await _orderService.GetOrderAsync(orderId);
+
+            if (response == null)
+                return BadRequest();
+
+            return Ok(response);
+        }
+
         [HttpPost]
         [Route("orders")]
         public async Task<ActionResult<Order>> PostOrder(Order order)

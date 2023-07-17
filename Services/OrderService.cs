@@ -120,5 +120,29 @@ namespace ApiGatewayService.Services
                 return null;
             }
         }
+
+        public async Task<Order?> GetOrderAsync(int orderId)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"{BASE_ADDRESS}/{orderId}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string content=await response.Content.ReadAsStringAsync();
+
+                    Order order= JsonConvert.DeserializeObject<Order>(content);
+
+                    return order;
+                }
+
+                return null;
+
+            }catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
     }
 }
