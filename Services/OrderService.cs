@@ -18,7 +18,8 @@ namespace ApiGatewayService.Services
         {
             try
             {
-                var response = await _httpClient.PostAsJsonAsync($"{BASE_ADDRESS}?orderId={orderId}", orderId);
+                var response = await _httpClient.PostAsJsonAsync($"{BASE_ADDRESS}/checkout?orderId={orderId}", orderId);
+                
                 if (response.IsSuccessStatusCode)
                 {
                     return true;
