@@ -101,7 +101,7 @@ namespace ApiGatewayService.Services
         {
             try
             {
-                var response = await _httpClient.GetAsync($"{BASE_ADDRESS}/userId");
+                var response = await _httpClient.GetAsync($"{BASE_ADDRESS}/{userId}");
 
                 if (response.IsSuccessStatusCode)
                 {
