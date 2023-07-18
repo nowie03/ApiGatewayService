@@ -61,6 +61,18 @@ namespace ApiGatewayService.Controllers
             return Ok(response);
         }
 
+        [HttpGet]
+        [Route("users")]
+        public async Task<ActionResult<User?>>GetUser(int userId)
+        {
+            var response = await _userService.GetUserAsync(userId);
+
+            if (response == null)
+                return BadRequest();
+
+            return Ok(response);
+        }
+
 
         [HttpGet]
         [Route("products/category")]

@@ -96,5 +96,28 @@ namespace ApiGatewayService.Services
                 return null;
             }
         }
+
+        public async Task<User?> GetUserAsync(int userId)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"{BASE_ADDRESS}/userId");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    User user = JsonConvert.DeserializeObject<User>(content);
+
+                    return user;
+                }
+
+                return null;
+
+            }catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
     }
 }
